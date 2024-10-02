@@ -1,0 +1,841 @@
+\documentclass[12pt]{article}
+
+\usepackage{fouriernc}%la fuente
+%\usepackage[sc]{mathpazo} %antigua fuente
+
+\usepackage{calligra}%esto es para tener el comando \calligra en textmode que permite escribir en cursiva el operador Hom muy lindo que es un haz.
+
+\usepackage[utf8]{inputenc}
+
+\usepackage[a4paper,width=150mm,top=25mm,bottom=25mm]{geometry}
+\usepackage{booktabs}
+
+\usepackage{subfiles} %esto es para modularizar el overleaf
+%para usar este paquete solamente hay que usar el comando
+%\subfile{}
+
+\usepackage{graphicx}
+
+
+
+\graphicspath{{./Figuras/}} %esto es para que encuentre las figuras hechas con pdf_tex en inkscape
+
+
+\usepackage{framed}
+\usepackage[dvipsnames]{xcolor} %agrega mas colores para xcolor.
+
+\usepackage{tcolorbox}
+
+\usepackage{xparse}
+\usepackage{xstring}
+
+\usepackage{stmaryrd} %para poner el comando \mapsfrom "<---|"
+
+\usepackage{amssymb}
+
+\usepackage{amsmath}
+
+\usepackage{subfig}
+
+\usepackage{mathrsfs} % para tener las fuentes \mathscr que es una letra mayuscula cursiva.
+
+\usepackage{tikz-cd}
+
+\usepackage{caption} %es para captionoffigure
+
+%\usetikzlibrary{babel} %CAUSA PROBLEMAS PARA COMPILAR TIKZCD QUE USA "" PARA DESIGNAR CADA TEXTO DE UNA FLECHA. SE ARREGLA USANDO \usetikzlibrary{babel} despues de \usepackage{tikz-cd}.
+\usetikzlibrary{
+  babel,%CAUSA PROBLEMAS PARA COMPILAR TIKZCD QUE USA "" PARA DESIGNAR CADA TEXTO DE UNA FLECHA. SE ARREGLA USANDO \usetikzlibrary{babel} despues de \usepackage{tikz-cd}.
+  %
+  %el resto es para agregar el QED Symbol custom como nudos
+  knots,
+  hobby,
+  decorations.pathreplacing,
+  shapes.geometric,
+  calc
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage[spanish,activeacute]{babel} %CAUSA PROBLEMAS PARA COMPILAR TIKZCD QUE USA "" PARA DESIGNAR CADA TEXTO DE UNA FLECHA. SE ARREGLA USANDO \usetikzlibrary{babel} despues de \usepackage{tikz-cd}.
+
+\usepackage{braket} %para definir \set , \Set y que los conjuntos se vean mas lindos
+
+\usepackage{mathtools}
+
+\usepackage{mathabx}
+\let\widering\relax %esto es porque hay problemas con el comando \widering que se define en la fuenta fouriernc y en el paquete \usepackage{mathabx}
+
+\usepackage[shortlabels]{enumitem}
+
+\definecolor{violet}{rgb}{0.0,0.2,0.7}
+\definecolor{rouge2}{rgb}{0.8,0.0,0.2}
+\usepackage{hyperref}
+\hypersetup{
+    %bookmarks=true,         % show bookmarks bar?
+    unicode=false,          % non-Latin characters in Acrobat’s bookmarks
+    pdftoolbar=true,        % show Acrobat’s toolbar?
+    pdfmenubar=true,        % show Acrobat’s menu?
+    pdffitwindow=false,     % window fit to page when opened
+    pdfstartview={FitH},    % fits the width of the page to the window
+    pdftitle={},    % title
+    pdfauthor={},     % author
+    colorlinks=true,       % false: boxed links; true: colored links
+   linkcolor=violet,          % color of internal links
+    citecolor=rouge2,        % color of links to bibliography
+    filecolor=black,      % color of file links
+    urlcolor=cyan}           % color of external links
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{amsthm}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newtheoremstyle{customTheorem}% name of the style
+  {}% space above
+  {}% space below|
+  {\itshape}% body font
+  {}% indent amount
+  {\bfseries}% theorem head font
+  { {\rule[0.6ex]{0.5cm}{0.03cm}}}% punctuation after theorem head
+  { }% space after theorem head
+  {\ifstrempty{#3}{#1 \thmnumber{#2}.}{#1 \thmnumber{#2}. \textup{(#3)}}}% theorem head spec
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newtheoremstyle{customDefinition}% name of the style
+  {}% space above
+  {}% space below
+  {}% body font
+  {}% indent amount
+  {\bfseries}% theorem head font
+  { {\rule[0.6ex]{0.5cm}{0.03cm}}}% punctuation after theorem head
+  { }% space after theorem head
+  {\ifstrempty{#3}{#1 \thmnumber{#2}.}{#1 \thmnumber{#2}. \textup{(#3)}}}% theorem head spec
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+\theoremstyle{customTheorem}
+\newtheorem{theorem}{Teorema}[section]
+\newtheorem{lemma}[theorem]{Lema}
+\newtheorem{proposition}[theorem]{Proposición}
+\newtheorem{proposition/definition}[theorem]{Proposición/Definición}
+\newtheorem{corollary}[theorem]{Corolario}
+\newtheorem{conjecture}[theorem]{Conjetura}
+\newtheorem{afirmacion}[theorem]{Afirmación}
+\newtheorem{recuerdo}[theorem]{Recuerdo}
+
+\theoremstyle{customDefinition}
+\newtheorem{definition}[theorem]{Definición}
+\newtheorem{hypothesis}[theorem]{Hipótesis}
+\newtheorem{example}[theorem]{Ejemplo}
+\newtheorem{obs}[theorem]{Observación}
+\newtheorem{notation}[theorem]{Notación}
+\newtheorem{remark}[theorem]{Comentario}
+\newtheorem{construction}[theorem]{Construcción}
+
+
+%por alguna razon el teorema $warning  est aen uso, asi que lo remuevo de maqnera trucha
+\newtheorem{warn}[theorem]{\textbf{ADVERTENCIA}}
+\renewenvironment{warning}{\begin{warn}}{\end{warn}}
+
+
+%me gusta renovar el ambiente demostración para que este subrayado
+\renewenvironment{proof}[1][Demostración]{\noindent \textit{\underline{#1}.\hspace{2mm}}}{\hfill\qed}
+
+
+
+%crear ejercicio
+\newtheorem{exercise}[theorem]{Ejercicio}
+%solución
+\newenvironment{solution}{\begin{proof}[Solución]}{\end{proof}}
+
+
+
+%como crear un nuevo ambiente de teorema o proposición que este sobreado con un recuadro de "color". primero hacemos
+
+%\newenvironment{Theorem}{\colorlet{shadecolor}{color} \begin{shaded} \begin{theorem} }{ \end{theorem} \end{shaded} }
+
+%Notar que primero hay que definir el color del sobreado con el comando
+%"\colorlet{shadecolor}{color}" y luego hay que usar el environment "shaded". Adentro de este ponemos el environment que queremos, en nuestro caso queremos "pintar" el environment "\begin{theorem}".
+
+
+%se puede cambiar la tonalidad de un color "yellow!80" es el color amarillo pero al 80%  y el 20% es mezclado con blanco, i.e. está aclarado. Pero "yellow!80!Black" es 80% amarillo y 20% negro, i.e. es obscurecido 20%.
+
+
+\newenvironment{Definition}{\begin{tcolorbox}[colback=Apricot!12] \begin{definition} }{ \end{definition} \end{tcolorbox} }
+
+\newenvironment{Example}{\begin{tcolorbox}[colback=Goldenrod!16] \begin{example}}{ \end{example} \end{tcolorbox}}
+
+\newenvironment{Remark}{\begin{tcolorbox}[colback=Orchid!12] \begin{remark}}{ \end{remark} \end{tcolorbox}}
+
+\newenvironment{Warning}{\begin{tcolorbox}[colback=red!12] \begin{warning}}{ \end{warning} \end{tcolorbox}}
+
+\newenvironment{Conjecture}{\begin{tcolorbox}[colback=magenta!16] \begin{conjecture}}{ \end{conjecture} \end{tcolorbox}}
+
+\newenvironment{Theorem}{\begin{tcolorbox}[colback=OliveGreen!18] \begin{theorem}}{ \end{theorem} \end{tcolorbox}}
+
+\newenvironment{Lemma}{\colorlet{shadecolor}{LimeGreen!12} \begin{tcolorbox}[colback=LimeGreen!12] \begin{lemma}}{ \end{lemma} \end{tcolorbox}}
+
+\newenvironment{Proposition}{\begin{tcolorbox}[colback=Green!12] \begin{proposition}}{ \end{proposition}\end{tcolorbox}}
+
+\newenvironment{Corollary}{\begin{tcolorbox}[colback=TealBlue!16] \begin{corollary}}{ \end{corollary} \end{tcolorbox}}
+
+\newenvironment{Obs}{\begin{tcolorbox}[colback=Dandelion!22] \begin{obs}}{ \end{obs} \end{tcolorbox}}
+
+\newenvironment{Exercise}{\begin{tcolorbox}[colback=Lavender!12] \begin{exercise}}{ \end{exercise} \end{tcolorbox}}
+
+\newenvironment{Construction}{\begin{tcolorbox}[colback=Brown!20!Red!10] \begin{construction}}{ \end{construction} \end{tcolorbox}}
+
+%%%%%COLORES%%%%%%%%%%%%
+%Hay varios comandos del paquete Xcolor:
+%\color{blue,green,red,yellow,orange,black,white,pink,purble,etc...} hace que
+%todo el bloque de texto se transforme en este color, se puede encerrar entre llaves bloque de texto que uno quiere colorear
+%\textcolor{color}{text} escribe el texto "text" en "color".
+%\colorbox{color}{text} pinta un rectangulo de "color" detrás del "text".
+%\shaded
+
+
+
+%lista de colores base de xcolor, como son colores de la extension del paquetem, empiezan con la primera letra mayuscula: si usaramos solo el paquete {xcolor} entonces no sería necesario.
+
+%red, Green (fluorecente), Blue (muy obscuro), Cyan, Magenta, Yellow, Black, Gray, lightgray, White, darkgray, lightgray, Brown, lime (este verde mas lindo manzana), olive (marron verdoso feo), Orange, pink, Purple, teal (verde marino), Violet
+
+%marco los colores lindos: red, Cyan, Magenta, Yellow, Black, Gray, White,  lime, Orange, pink, teal, Violet
+
+%Colores que incluye el paquete dvipsnames: Apricot (color beige), Brown, Goldenrod, JungleGreen, Salmon, Lavender, SpringGreen, Turquoise, Plum, Emerald, BurntOrange (naranja piola), ForestGreen (verde oscuro), BrickRed (rojo obscuro)
+
+\definecolor{pedroblue}{RGB}{43, 138, 227}
+\definecolor{pedrogreen}{RGB}{86, 190, 82}
+
+\newcommand{\pedroblue}[1]{\textcolor{pedroblue}{#1}}
+\newcommand{\pedrogreen}[1]{\textcolor{pedrogreen}{#1}}
+
+\newcommand{\red}[1]{\textcolor{BrickRed}{#1}}
+
+\newcommand{\green}[1]{\textcolor{SpringGreen}{#1}}
+
+\newcommand{\blue}[1]{\textcolor{Cyan}{#1}}
+
+\newcommand{\yellow}[1]{\textcolor{yellow!80!Black}{#1}} %se puede cambiar la tonalidad de un color "yellow!80" es el color amarillo pero al 80%  y el 20% es mezclado con blanco, i.e. está aclarado. Pero "yellow!80!Black" es 80% amarillo y 20% negro, i.e. es obscurecido 20%.
+
+\newcommand{\black}[1]{\textcolor{Black}{#1}}
+
+\newcommand{\gray}[1]{\textcolor{Gray}{#1}}
+
+\newcommand{\purple}[1]{\textcolor{Purple}{#1}}
+
+\newcommand{\beige}[1]{\textcolor{Apricot}{#1}}
+
+\newcommand{\darkgreen}[1]{\textcolor{ForestGreen}{#1}}
+
+\newcommand{\pink}[1]{\textcolor{Lavender}{#1}}
+
+\newcommand{\salmon}[1]{\textcolor{Salmon}{#1}}
+
+\newcommand{\brown}[1]{\textcolor{RawSienna}{#1}}
+
+\newcommand{\white}[1]{\textcolor{White}{#1}}
+
+\newcommand{\orange}[1]{\textcolor{BurntOrange}{#1}}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%DIBUJOS DE KNOTS
+
+
+%%DIBUJA EL five knot
+\newcommand{\fiveknot}{%
+\begin{tikzpicture}[transform canvas={scale=0.1}]
+\begin{knot}[
+  consider self intersections=true,
+%  draft mode=crossings,
+  flip crossing/.list={2,4},
+  only when rendering/.style={
+%    show curve controls
+  }
+]
+\strand[black, line width=8pt] (2,0) .. controls +(0,1) and +(54:1.0) .. (144:2) .. controls +(54:-1.0) and +(18:-1.0) .. (-72:2) .. controls +(18:1.0) and +(162:-1.0) .. (72:2) .. controls +(162:1.0) and +(126:1.0) .. (-144:2) .. controls +(126:-1.0) and +(0,-1.0) .. (2,0);
+\end{knot}
+\end{tikzpicture}
+}
+
+
+%DIBUJA EL TREFOIL KNOT
+\newcommand{\trefoilknot}{%
+\begin{tikzpicture}[transform canvas={scale=0.1}, line width=10pt]
+\begin{knot}[
+  consider self intersections=true,
+%  draft mode=crossings,
+  flip crossing=2,
+  only when rendering/.style={
+%    show curve controls
+  }
+  ]
+\strand[black, line width=10pt] (0,2) .. controls +(2.2,0) and +(120:-2.2) .. (210:2) .. controls +(120:2.2) and +(60:2.2) .. (-30:2) .. controls +(60:-2.2) and +(-2.2,0) .. (0,2);
+\end{knot}
+\end{tikzpicture}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%Teoría de Grupos%%%%%%%%%%%%
+
+%Grupo simétrico de n elementos
+\newcommand{\SymGrp}[1]{\mathbb{S}_{#1}}
+%Grupo alternado de n elementos
+\newcommand{\AltGrp}[1]{\mathbb{A}_{#1}}
+
+%Orden de un elemento $a \in G$ de un grupo
+\newcommand{\ord}[1]{\operatorname{ord} (#1)}
+
+
+
+
+
+
+
+%%%%%%%%%%%%%%%Polinomios%%%%%%%%%%%%%%%%%%%%
+
+
+%grado de una extensión algebraica
+\newcommand{\degExt}[2]{[#1:#2]}
+\newcommand{\degSep}[2]{[#1 : #2]_s}
+\newcommand{\degInsep}[2]{[#1:#2]_i}
+
+
+%espacio afin A^n
+\newcommand{\afine}[1]{\mathbb{A}^{#1}}
+%espacio proyectivo P^n
+\newcommand{\projective}[1]{\mathbb{P}^{#1}}
+
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%grupos de matrices
+%SL
+\newcommand{\SL}[2]{\operatorname{SL}_{#1} ( #2)}
+%GL
+\newcommand{\GL}[2]{\operatorname{GL}_{#1} ( #2)}
+
+%matriz identidad
+\newcommand{\Id}{\operatorname{Id}}
+
+
+
+%enteros Z
+\newcommand{\integers}{\mathbb{Z}}
+%racionales
+\newcommand{\rationals}{\mathbb{Q}}
+%naturales
+\newcommand{\naturals}{\mathbb{N}}
+%reales R
+\newcommand{\reals}{\mathbb{R}}
+%imaginarios
+\newcommand{\complex}{\mathbb{C}}
+%p-adicos
+\newcommand{\padics}{\mathbb{Q}_p}
+%enteros p-adicos
+\newcommand{\padicintegers}{\mathbb{Z}_p}
+
+%cuerpos finitos
+%Fp
+\newcommand{\Fp}{\mathbb{F}_p}
+%Fq
+\newcommand{\Fq}{\mathbb{F}_q}
+
+
+
+%valor absoluto
+\newcommand{\abs}[1]{\left \vert #1 \right \vert}
+%valor absoluto con dos barras
+\newcommand{\Abs}[1]{\left \vert \left \vert #1 \right \vert \right \vert}
+
+%valuacion p-adica
+\newcommand{\val}[1]{\operatorname{val} (#1)}
+
+%Hom
+\newcommand{\Hom}[3]{\operatorname{Hom}_{#1} (#2, #3)}
+%Hom con caligrafia cursiva
+\newcommand{\HomCalli}[3]{\operatorname{\text{\calligra{Hom}}}_{\: \: \: #1} (#2, #3)}
+
+%imagen y núcleo
+\newcommand{\Imagen}{\operatorname{Im}}
+\newcommand{\Ker}{\operatorname{Ker}}
+
+%coker
+\newcommand{\Coker}{\operatorname{Coker}}
+
+%limite inverso
+\newcommand{\liminv}{\varprojlim}
+
+
+%un poco de typeset para categorias
+\newcommand{\catname}[1]{{\operatorfont\textbf{#1}}}
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{stackengine} %%% esto es para estaquear simbolos uno arriba de otro: crear el \isomrightarrow y el \setminus mas bonito
+
+
+
+%flecha de isomorfismo a derecha corto \isomrightarrow
+\newcommand{\isomrightarrow}{\mathrel{\stackon[1pt]{$\rightarrow$}{\resizebox{!}{3pt}{$\sim$}}}}
+%flecha de isomorfismo a derecha largo \isomrightarrow
+\newcommand{\isomlongrightarrow}{\mathrel{\stackon[1pt]{$\longrightarrow$}{\resizebox{!}{3pt}{$\sim$}}}}
+
+
+
+
+%flecha de isomorfismo a izquierda corto \isomleftarrow
+\newcommand{\isomleftarrow}{\mathrel{\stackon[1pt]{$\leftarrow$}{\resizebox{!}{3pt}{$\sim$}}}}
+%flecha de isomorfismo a izquierda largo \isomleftarrow
+\newcommand{\isomlongleftarrow}{\mathrel{\stackon[1pt]{$\longleftarrow$}{\resizebox{!}{3pt}{$\sim$}}}}
+
+
+%setminus redefinido para que se vea mas lindo
+\renewcommand{\setminus}{\mathrel{\stackon[0.5pt]{}{$\smallsetminus$}}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+
+
+
+%flecha de gancho hook a derecha largo \hooklongrightarrow
+\newcommand{\hooklongrightarrow}{\lhook\joinrel\longrightarrow}
+%flecha de gancho hook a izquierda largo \hooklongleftarrow
+\newcommand{\hooklongleftarrow}{\longleftarrow\joinrel\rhook}
+
+%flecha de dos cabezas twoheads a derecha largo \twoheadlongrightarrow
+\newcommand{\twoheadlongrightarrow}{\relbar\joinrel\twoheadrightarrow}
+%flecha de dos cabezas twoheads a izquierda largo \twoheadlongleftarrow
+\newcommand{\twoheadlongleftarrow}{\twoheadleftarrow\joinrel\relbar}
+
+
+
+\renewcommand{\hat}[1]{\widehat{#1}}
+\renewcommand{\bar}[1]{\overline{#1}}
+\renewcommand{\tilde}[1]{\widetilde{#1}}
+
+%declaro un comando nuevo para escribir restricción de funciones
+\newcommand\rest[2]{{% we make the whole thing an ordinary symbol
+  \left.\kern-\nulldelimiterspace % automatically resize the bar with \right
+  #1 % the function
+  \vphantom{\big|} % pretend it's a little taller at normal size
+  \right|_{#2} % this is the delimiter
+  }}
+
+
+%%%%   COMANDO ALGEBRA CONMUTATIVA   %%%%
+
+%altura de un ideal:
+\newcommand{\height}{\textsc{height}}
+
+%Clausura topológica
+\newcommand{\closure}[1]{\overline{#1}}
+
+%longitud de un A-modulo. Notacion: \length_A M
+\newcommand{\length}{\operatorname{length}}
+
+%Anulador de un $A$-módulo.
+\newcommand{\Ann}[1]{\operatorname{Ann} (#1)}
+
+%Cuerpo de fracciones. Notacion $\FracField A$.
+\newcommand{\FracField}[1]{\operatorname{Fr} (#1)}
+
+\newcommand{\Spec}[1]{\operatorname{Spec}(#1)}
+
+%conjunto de Lugares de un cuerpo
+\newcommand{\places}[1]{\mathcal{Pl} (#1)}
+
+%volumen
+\newcommand{\Vol}[1]{\operatorname{vol}\left ( #1 \right)}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+%%%%   COMANDO ANÁLISIS  %%%%
+
+%definimos el diferencial d de la integral "\int f(x) \dd x"
+\newcommand*\dd{\mathop{}\!\mathrm{d}}
+
+%definimos mas diferenciales
+\newcommand{\dmu}[1]{\dd \mu (#1)}
+\newcommand{\dnu}[1]{\dd \nu (#1)}
+\newcommand{\dtheta}[1]{\dd \theta (#1)}
+\newcommand{\dxi}[1]{\dd \xi (#1)}
+\newcommand{\deta}[1]{\dd \eta (#1)}
+
+
+
+
+
+
+%%%%   COMANDO TEORÍA DE NÚMEROS  %%%%
+
+%Morfismo de Frobenius
+\newcommand{\Frob}{\operatorname{Frob}}
+
+%Grupo de Galois
+\newcommand{\Gal}[2]{\operatorname{Gal} ( #1 / #2 )}
+
+%Discriminante
+\newcommand{\discriminant}[1]{\mathfrak{d} (#1 )}
+\newcommand{\disc}{\operatorname{d}}
+\newcommand{\Disc}[3]{\operatorname{D}_{#1 / #2} (#3)}
+
+%%%%Ideales primos%%%
+%escribe una letra en notación mathfrak, para denotar a un ideal o elemento primo.
+
+\newcommand{\primo}[1]{\mathfrak{#1}}
+\newcommand{\Primo}[1]{\mathfrak{\MakeUppercase{#1}}}
+
+%anillo de enteros O_K
+\renewcommand{\O}{\mathcal{O}}
+%anillo de enteros con subindice de cuerpo (input, por ejemplo $K$).
+\newcommand{\integralring}[1]{O_{#1}}
+
+%caracteristica de un cuerpo Char k
+\newcommand{\Char}[1]{\operatorname{Char} #1}
+
+%traza. Notación \trace = Tr
+\newcommand{\trace}{\operatorname{Tr}}
+
+%Traza de extensiones. Notación \Tr L K \alpha = \operatorname{Tr}_{L/K} (\alpha)
+\newcommand{\Tr}[1]{\operatorname{Tr}_{L/K} (#1)} %la extension es L/K por default
+\newcommand{\tr}[3]{\operatorname{Tr}_{#1/#2} (#3)}
+
+%Norma de extensiones. Notación \Norm L K \alpha = \operatorname{N}_{L/K} (\alpha)
+\newcommand{\Norm}[1]{\operatorname{N}_{L/K} (#1)}%la extension es L/K por default
+\newcommand{\norm}[3]{\operatorname{N}_{#1/#2} (#3)}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%COMANDOS GEOMETRIA ALGEBRAICA
+
+%grupo de cohomología H^n (U,V)
+\renewcommand{\H}[3]{\operatorname{H}^{#1} (#2, #3)}
+
+
+\newcommand{\cp}[1]{\textbf{cp}(#1)}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Cada dibujo se puede automatizar:
+%1) necesitamos el archivo "Dibujo n.png" en la carpeta "Clase m", donde $n$ es el número del dibujo y $m$ es el número de la clase.
+
+\newcounter{numeroDibujo}
+
+%\renewcommand\thefigure{\thesection.\arabic{figure}}  no se si esto vale la pena
+
+%el comando Inkscape tiene dos inputs \Inkscape{input 1}{input 2}, el primer input es [OPCIONAL] y representa el ancho del dibujo, y el segundo es el caption de la figura.
+
+\NewDocumentCommand{\Inkscape}{O{1} m}{
+\stepcounter{numeroDibujo}
+\begin{center}\label{Figura: Dibujo \thenumeroDibujo}
+\def\svgwidth{#1\textwidth}
+\input{"./Figuras/Figura \thenumeroDibujo.pdf_tex"}
+\captionof{figure}{#2}
+\end{center}
+}
+
+
+
+
+
+
+\title{Teorema de Chevalley sobre la imagen de un conjunto constructible}
+\author{Enzo Giannotta}
+
+
+
+
+
+
+\begin{document}
+
+%%%% CAMBIAR EL QUED POR UN 5-KNOT
+%\renewcommand{\qedsymbol}{\fiveknot}
+
+\maketitle
+
+%--------------------------------- ACA VA LA TABLA DE CONTENIDOS
+
+\tableofcontents
+
+%---------------------------------
+
+\section{Introducción}
+En las notas \cite[Capítulo 3, última sección]{mustata2017ag} hay una exposición bastante clara sobre conjuntos constructibles y el Teorema de Chevalley \ref{Teorema} de donde se basaron estas notas. Por otro lado, el Ejercicio \ref{Ejercicio} es un ejercicio sacado del libro \cite[Ejercicio 1.10]{hartshorne2013algebraic}, de donde también expongo la definición de dimensión de un espacio topológico $X$ Finalmente, el Teorema de Chevalley es una consecuencia de un lema técnico que se prueba en \cite[Proposición 1.9.4.]{springer1998linear}, y que he decidido modificar levemente para que sea más clara su aplicación (cf. Proposición \ref{Proposicion}).
+
+
+
+
+
+
+\section{Un lema técnico}
+El objetivo de esta sección es probar un lema técnico y utilizarlo para probar el Teorema de Chevalley \ref{Teorema} en una versión más débil.
+
+\begin{definition}
+    Decimos que un anillo $B$ es \textbf{de tipo finito} sobre un subanillo $A$ si existen elementos $b_1, \ldots, b_r$ en $B$ tales que $B = A[b_1, \ldots, b_r]$. Recordemos también que $B$ se dice \textbf{reducido}, si no tiene \textbf{elementos nilpotentes} no nulos, es decir elementos $b \in B$ tales que $b^n = 0$ para algún $n \geq 1$.
+\end{definition}
+
+Sea $B$ un anillo reducido de tipo finito sobre un subanillo $A \hookrightarrow B$. Supongamos que $B$ está generado solamente por un elemento, i.e., existe $b \in B$ tal que $B = A[b]$. Notar que $B \cong A[T]/I$, donde $A[T]$ es el anillo de polinomios en la variable $T$ y coeficientes en $A$, e $I$ es el ideal dado por el núcleo del homomorfismo
+\begin{align*}
+        A[T] &\longrightarrow B, \\
+        1_A &\longmapsto 1_B, \\
+        T &\longmapsto b.
+\end{align*}
+Notar que el ideal $I$ es el conjunto de todos los polinomios $f \in A[T]$ tales que $f(b) = 0$; notar que $I$ no contiene polinomios constantes no nulos.
+
+\begin{notation}
+Denotamos por $ \cp I$ como el conjunto de todos los coeficientes principales de los polinomios no nulos de $I$ junto con el cero. Notar que $\cp I$ es un ideal de $A$.
+\end{notation}
+
+
+
+\begin{lemma}\label{Pre-lema}
+    Sea $B$ un anillo reducido tal que $B = A [b]$ con $A \hookrightarrow B$ un subanillo. Sean $k$ un cuerpo algebraicamente cerrado y $\phi : A \to k$ un homomorfismo tal que $\phi (\cp I) \neq \{0\} $. Entonces $\phi$ puede extenderse a un homomorfismo $\bar \phi : B \to k$.
+\end{lemma}
+\begin{proof}
+    Primero extendamos $\phi$ a un homomorfismo $\phi : A[T] \to k[T]$ de la manera obvia: $T \mapsto T$ y $a \mapsto \phi (a)$. Ahora, si vale la siguiente condición:
+    \begin{equation}\label{eq1}
+        \textit{el ideal $\phi (I) \subset k[T]$ no contiene polinomios constantes no nulos,}\tag{C}
+    \end{equation}
+    entonces al ser $k[T]$ un dominio de ideales principales, está generado por un polinomio no constante, el cual tiene al menos un cero en $k$ por ser algebraicamente cerrado, digamos $z$. Ahora bien, $\bar \phi : B \to k$ dado por $b \mapsto z$ es un homomorfismo que extiende a $\phi$.
+
+    Acabamos de probar que si vale \eqref{eq1}, entonces vale el enunciado. Notar que el conjunto de los $m \geq 1$ tales que existe un polinomio $h(T) = a_0 + a_1 T + \cdots + a_m T^m \in I$ de tal suerte que $\phi (a_m) \neq 0$ es no vacío, pues por hipótesis $\phi (\cp I) \neq 0$. Sea $m_0 \geq 1$ el mínimo de estos $m$ para $A$, $B$ y $\phi$ fijos. Supongamos por el absurdo que no vale $\eqref{eq1}$, luego también existe un mínimo $m_0 = m_0 (A,B,\phi) \geq 1$ tal que la condición no vale y que depende de la tripleta $(A,B,\phi)$.
+    Escribamos $h(T) = a_0 + a_1 T + \cdots + a_{m_0} T^{m_0}$.
+
+    Sea $s(T) = s_0 + s_1 T + \cdots + c_{n} T^n \in I$ un polinomio no constante arbitrario de $I$ tal que $\phi (s) \not \equiv 0$. Como estamos suponiendo que $\eqref{eq1}$ no vale, se tiene que $\phi (s)$ es un polinomio constante no nulo, i.e., $\phi (s_i) = 0$ para todo $i \geq 1$ y $\phi (s_0) \in k \setminus \{0\}$. Apliquemos el algoritmo de la división en el anillo $A[T]$ de $s(T)$ dividido $h(T)$: existen polinomios $q, r \in A[T]$ y un entero $d \geq 0$ tales que
+    \[
+    a_{m_0}^d s = q h + r,
+    \]
+    con $\deg r < \deg h = m_0$ o $r = 0$. Evaluando a ambos lados por $\phi$, nos queda
+    \[
+    \phi (a_{m_0})^d \phi (s_0) = \phi (q) \phi (h) + \phi(r) \quad \text{en } k[T].
+    \]
+    Donde el lado izquierdo es una constante no nula, i.e., polinomio de grado $0$. Inspeccionando con más cuidado el grado del polinomio de la derecha, concluimos que $\phi (q) \equiv 0$ y por lo tanto $\phi (r)$ es una constante no nula. Reemplazando $s$ por el polinomio $r \in I$, vemos que $n <m_0$ y que $m_0 > 1$.
+
+    Ahora, consideremos la siguiente operación en $A[T]$: dado $h \in A[T]$ de la forma $h (T) = h_0 + h_1 T + \cdots + h_m T^m$, podemos considerar el polinomio $\tilde h (T) := T^m h(T^{-1}) = h_m + h_{m-1}T + \cdots + h_0 T^m$ que se define como $0$ si $h \equiv 0$. Notar que si $h_0 = \cdots = h_l = 0$, entonces $\tilde h (T)$ tiene grado $m-(l+1)$, luego
+    \begin{equation}\label{eq2}
+        \tilde{\tilde{h}} = h/T^{l+1}.
+    \end{equation}
+    También tenemos que $\tilde I$ es un ideal de $A[T]$ si $I$ es un ideal de $A[T]$. En general, en álgebra conmutativa dados un ideal $I$ de un anillo $R$ y un subconjunto multiplicativamente cerrado o singleton $S \subset R$, se puede definir el ideal
+    \[
+    (I : S) := \{r \in R | \text{ existe $s \in S$ de tal suerte que } r s \in I\}.
+    \]
+    Resulta que a partir de $\eqref{eq2}$, se deduce que para todo $r \in \tilde{\tilde{I}}$, existe $d \geq 1$ tal que $(Tr)^d \in I$. Como $B \cong A[T]/I$ es reducido, $(Tr)^d \in I$ si y solo si es $Tr$ es nilpotente en $A[T]/I$, i.e., $Tr \in I$. Esto prueba que $\tilde{\tilde{I}} = (I: \{T\})$.
+
+    Estudiemos los polinomios constantes de $A[T]$ que pertenecen a $\tilde I$, i.e., $J := A \cap \tilde I$. Si $a \in A \cap \tilde I$, notemos que al ser constante, $a = \tilde a \in \tilde{\tilde{I}} \cap A = (I : \{T\}) \cap A$ es el ideal $\{ a \in A | a T \in I\}$ de $A$. Debe ser que $\phi (J) = 0$, de lo contrario $s(T) := a T$ tendría grado $1$ y $\phi$ evaluado en su coeficiente principal no sería nulo, i.e., $m_0 = 1$. Entonces podemos ahora considerar los anillos $\tilde B := A[T] / \tilde I$, $\tilde A := A/J$, y el homomorfismo $A/J \hookrightarrow \tilde B$. Antes de seguir, fijémonos que $\tilde B$ sea reducido: si $s \in \tilde B$ es nilpotente, entonces existe $d \geq 1$ tal que $s^d \in \tilde I$. Luego $(\tilde s)^d = \tilde {s^d} \in \tilde{\tilde{I}} = (I:\{T\})$, con lo cual $T (\tilde s )^d \in I$, en particular $(T \tilde s ) ^d \in I$. Argumentando como más arriba, la reducibilidad de $B \cong A[T]/I$ implica que $T \tilde s \in I$. Consecuentemente, $\tilde{\tilde{s}} = \tilde{T \tilde s} \in \tilde I$, y como $s$ es un múltiplo de este por $\eqref{eq2}$, se sigue que al ser $\tilde I$ un ideal, $s \in \tilde I$. Probando que $\tilde B$ es reducido.
+
+    Finalmente, notemos que $\phi$ induce un homomorfismo $\tilde \phi : \tilde A \to k$, y además, $\tilde I$ contiene a $\tilde s$ que tiene grado $n < m_0$ y que cumple la hipótesis $\tilde \phi (\cp {\tilde I}) \neq \{0\}$. Por minimalidad de $m_0$, debe ser que la condición \eqref{eq1} se cumple y por lo tanto obtenemos una extensión $\bar {\tilde \phi } : \tilde B \to k$. Sea $\tilde b$ tal que $\tilde B = \tilde A [\tilde b]$, entonces $\tilde \phi (\tilde b) = 0$, pues $\tilde \phi (\tilde b)$ es la única raíz del polinomio $\tilde \phi (\tilde s) = \phi (s_0) T^n \in k[T]$. Por otro lado, $\tilde I$ contiene a $\tilde h$ y $\tilde \phi (\tilde h) \neq 0$, llevando a una contradicción ya que $\tilde \phi (\tilde b) = 0$ debería también ser una raíz del polinomio constante $\tilde \phi (\tilde h)$. Con esto se concluye la demostración.
+
+\end{proof}
+
+\begin{lemma}[Lema técnico]\label{Lema tecnico}
+    Sea $B$ un dominio íntegro y sea $g : A \hookrightarrow B$ un homomorfismo de anillos tal que $B$ es de tipo finito sobre $g(A)$. Entonces dado $b \in B \setminus \{0\}$, existe $a \neq 0$ en $A$ de tal suerte que si $\phi : A \to k$ es un homomorfismo donde $k$ es un cuerpo algebraicamente cerrado y $\phi (a) \neq 0$, luego $\phi$ se puede extender a un homomorfismo $\bar \phi : B \to k$ tal que $\phi (b) \neq 0$, i.e., $\phi = \bar \phi \circ g$.
+\end{lemma}
+\begin{proof}
+    Nuevamente, se deja como ejercicio demostrar que si probamos el caso $A \subset B$ y $g$ dada por la inclusión de anillos, entonces se puede probar el caso general.
+
+    Notar que podemos hacer una reducción extra y suponer que $B$ está solamente generado por un solo elemento: $B = A[b'] \cong A[T] / I$. El caso $I = 0$ se deja de ejercicio, así que supongamos que $I \neq 0$. Tomemos $h \in I$ de grado mínimo $m \geq 0$, con coeficiente principal $h_m \in A \setminus \{0\}$. Dado $s \in A[T]$, se tiene que por el algoritmo de la división en $A[T]$ aplicado a $s$ dividido $h$, se sigue que $s \in I$ si y solo si existe $d \geq 0$ tal que $h_m^d s$ es divisible por $h$. Sea $p \in A[T]$ un polinomio tal que $b = p(b')$, tenemos que $p \not \in I$, de lo contrario existiría $d \geq 0$ tal que $h_m^d b = 0$, pero estamos en un dominio íntegro. Sea $L$ el cuerpo de fracciones de $A$, tenemos que $h$ es irreducible en $L[T]$ y que es coprimo con $p$. La identidad de bezout nos dice que existen polinomios $\alpha, \beta \in L[T]$ tales que $\alpha h + \beta p = 1$,
+    multiplicando por los denominadores de los coeficientes de $\alpha$ y $\beta$, vemos existen polinomios $\alpha '$ y $\beta '$ en $A[T]$ tales que
+    \[
+    \alpha ' h + \beta ' p = c \in A \setminus \{0\}.
+    \]
+
+    Tomemos $a := c p_m \in A \setminus \{0\}$. Ahora, si $\phi : A \to k$ es un homomorfismo tal que $\phi (a) \neq 0$, lo podemos extender por el pre-lema anterior a un homomorfismo $\phi : B \to k$. En particular, $\phi (p_m) \neq 0 \neq \phi (c)$. Evaluando la identidad de arriba en $b'$ y luego tomando $\phi$, vemos que existe una constante $e \in k$ tal que $e \phi (b) = \phi (c) \neq 0$, luego $\phi (b) \neq 0$.
+\end{proof}
+
+\begin{Theorem}[Teorema de Chevalley \textit{débil}]\label{Teorema debil}
+    Sean $X$ e $Y$ dos variedades afines, $X$ irreducible y $f : X \to Y$ un morfismo de variedades algebraicas dominante. Entonces $f(X)$ contiene un abierto denso de $Y$.
+\end{Theorem}
+\begin{proof}
+    Consideremos el morfismo de $k$-álgebras $f^* : k[Y] \hookrightarrow k[X]$, el cual es inyectivo porque $f$ es dominante. (Recordar que un morfismo $f$ se dice $\textbf{dominante}$ si su imagen es densa en su co-dominio). Como $k[X]$ es un dominio íntegro porque $X$ es una variedad afín irreducible, y es de tipo finito sobre $k \subset k[Y]$, es en particular de tipo finito sobre $k[Y]$. Como estamos bajo las hipótesis del Lema técnico, podemos tomar $b := 1$. Sabemos que existe $a \neq 0$ en $k[Y]$ tal que todo homomorfismo $\phi : k[Y] \to k$ que no se anula en $a$, se extiende a $k[X]$, en el siguiente sentido: $\phi = \bar \phi  \circ f^*$ para un homomorfismo $\bar \phi : k[X] \to k$ no nulo.
+
+    Ahora bien, los puntos de una variedad afín $Y$ corresponden biyectivamente con los homomorfismos $k[Y] \to k$ de $k$-álgebras, los puntos del abierto principal $D_Y (a)$ de $Y$ corresponden con los homomorfismos $k[Y] \to k$ que no se anulan en $a$, y a su vez, los puntos de $Y$ correspondientes a $f(X)$ son los homomorfismos $k[Y] \to k$ que se extienden a $k[X] \to k$ vía $f^*$. Esto prueba que $f(X)$ contiene el abierto $D_Y (a)$ de $Y$.
+\end{proof}
+
+
+
+\section{Conjuntos constructibles}
+
+Sea $X$ un espacio topológico. Recordemos que un conjunto $A \subset X$ se dice \textbf{localmente cerrado} si $A = U \cap F$ con $U \subset X$ abierto y $F \subset X$ cerrado. Equivalentemente, $A$ es abierto en $\bar A$. Por ejemplo, los abiertos y los cerrados de un espacio topológico son localmente cerrados porque se pueden escribir como $U = U \cap X$ y $F = F \cap X$, con $X$ tanto cerrado como abierto.
+
+\begin{definition}
+    Sea $A$ un subconjunto de un espacio topológico $X$. Diremos que $A$ es \textbf{constructible} si se puede escribir como la unión de finitos subconjuntos localmente cerrados de $X$.
+\end{definition}
+
+\begin{proposition}\label{Proposicion}
+\begin{enumerate}
+    \item La familia $\mathcal C$ de conjuntos constructibles en un espacio topológico $X$ es la menor familia que contiene los conjuntos abiertos de $X$ y es cerrada por finitas uniones, finitas intersecciones, y complementos.
+
+    \item \textit{(Transitividad)} Sea $X$ un espacio topológico con $Y \subset X$ subespacio. Si $Y'$ es un subconjunto constructible de $Y$ (topología subespacio), además, $Y$ es constructible en $X$, entonces $Y'$ es constructible en $X$.
+\end{enumerate}
+\end{proposition}
+\begin{proof}
+    Primero veamos que la familia $\mathcal C$ es cerrada para las operaciones recién mencionadas. Sean $A$ y $B$ constructibles, es decir,
+    \[
+    A = A_1 \cup \cdots \cup A_s \quad \text y \quad B = B_1 \cup \cdots \cup B_r,
+    \]
+    donde los $A_i$ y $B_j$ son localmente cerrados de $X$. Tenemos que $\mathcal C$ es:
+    \begin{enumerate}
+        \item \underline{\textit{Cerrada por finitas uniones.}} Inmediato.
+        \item \underline{\textit{Cerrada por finitas intersecciones.}}
+        \[
+        A \cap B = \bigcup_{i,j} A_i \cap B_j,
+        \]
+        como la intersección de dos localmente cerrados es localmente cerrado, la expresión de arriba es una unión de finitos localmente cerrados, ergo es constructible. En general, para finitas intersecciones de constructibles procedemos por inducción el número de intersecciones.
+        \item \underline{\textit{Cerrado por complementos.}}
+        \[
+        A^c = \bigcap_i A_i^c,
+        \]
+        donde en el lado derecho hay una intersección de finitos conjuntos de la forma $A_i^c$, los cuales son constructibles porque el complemento de un localmente cerrado es constructible. En efecto, si $A_i = U_i \cap F_i$ con $U_i$ abierto de $X$ y $F_i$ cerrado, entonces $A_i^c = U_i^c \cup F_i^c$. Así, $A^c$ es constructible por el ítem anterior.
+    \end{enumerate}
+
+    Finalmente, que $\mathcal C$ es minimal con estas operaciones se deduce de que si $\mathcal C'$ es otra familia de subconjuntos de $X$ que contiene a los abiertos y es cerrado para las operaciones, entonces tomando complemento vemos que contiene a los cerrados, y tomando intersección contiene a los localmente cerrados; por último, contiene a los constructibles tomando finitas uniones.
+
+    \bigskip
+
+    Veamos el segundo ítem. Supongamos que $Y' = \bigcup_{i = 1}^n U_i' \cap V_i'$ tal que $U_i'$ es abierto de $Y$ y $V_i'$ es cerrado de $Y$. Con lo cual, $U_i' = U_i \cap Y$ y $V_i' = V_i \cap Y$ para $U_i$ abierto de $X$ y $V_i$ cerrado de $X$. Por lo tanto, podemos escribir:
+    \[
+    Y' = \bigcup_{i = 1}^n U_i \cap V_i \cap Y.
+    \]
+    Así, $Y'$ es la unión finita de conjuntos constructibles en $X$: $U_i$ es abierto (en particular constructible), $V_i$ es cerrado (en particular constructible) e $Y$ constructible, con lo cual la intersección $U_i \cap V_i \cap Y$ es constructible en $X$. Por el ítem anterior, la unión e intersección de finitos conjuntos constructibles es constructible, consecuentemente $Y'$ es constructible en $X$.
+\end{proof}
+
+\begin{lemma}\label{Lema}
+    Sea $X$ un espacio topológico, y $A \subset X$ un subconjunto constructible, entonces contiene un $V$ que abierto y denso en $\bar A$. (En particular, $V$ es localmente cerrado en $A$).
+\end{lemma}
+\begin{proof}
+    Como los subconjuntos constructibles son uniones finitas de localmente cerrados, basta probar que vale para $A$ localmente cerrado y luego para uniones finitas.
+    \begin{enumerate}
+        \item \underline{\textit{Localmente cerrado.}} Si $A$ es localmente cerrado, se escribe como $A = U \cap F$, donde $U \subset X$ es abierto y $F \subset X$ es cerrado. Ahora, podemos tomar $V := A \subset A$ si es que vemos que $A$ es abierto denso de $\bar A$. Por un lado, es abierto pues
+        \[
+        A = U \cap F = U \cap U \cap F = U \cap A = U \cap A \cap \bar A = U \cap \bar A;
+        \]
+        por otro lado, por definición es denso en su clausura.
+        \item \underline{\textit{Uniones finitas.}} Si $A$ y $B$, contienen, respectivamente a $V$ y $W$ abiertos densos de $\bar A$ y $\bar B$, entonces $A\cup B$ contiene a $V \cup W$ que es abierto denso de $\bar {A \cup B} = \bar A \cup \bar B$. En general, para más de dos uniones procedemos por inducción.
+    \end{enumerate}
+\end{proof}
+
+\section{Recuerdo de dimensión}
+
+\begin{enumerate}
+    \item Recordar que en un espacio topológico $X$, decimos que un subespacio $Y$ es \textbf{irreducible} si no se puede escribir como la unión de dos cerrados propios no vacíos de $Y$. Por ejemplo los singletons $\{x\}$, $x \in X$ son siempre irreducibles.
+    \item Recordar que si $X$ es un espacio topológico, definimos la \textbf{dimensión} como el supremos de todos los $n \geq 0$ tales que existe una secuencia de inclusiones
+    \[
+    X_0 \subsetneq X_1 \subsetneq \cdots \subsetneq X_n
+    \]
+    con $X_i$ cerrado irreducible de $X$.
+    \item  La dimensión de la recta afín $\afine 1$ es $1$. En efecto, sus únicos cerrados irreducibles son $\afine 1$, y los singletons $\{x\}$, $x \in \afine 1$.
+    \item Una prevariedad de dimensión $0$ es la unión de finitos puntos.
+\end{enumerate}
+
+\begin{exercise}\label{Ejercicio}
+    Probar que si $X$ es un espacio topológico de dimensión finita e $Y$ es un subespacio de $X$, entonces $\dim Y \leq \dim X$. Probar que además, si $X$ es irreducible e $Y$ es cerrado, luego $X= Y$ si y solo si $\dim X = \dim Y$.
+\end{exercise}
+
+\section{Teorema de Chevalley}
+
+\begin{Theorem}[Chevalley]\label{Teorema}
+    Sea $f : X \to Y$ un morfismo de variedades algebraicas. Entonces si $A$ es un subconjunto constructible de $X$, luego $f(A)$ es constructible de $Y$. En particular, $f(X)$ es constructible en $Y$.
+\end{Theorem}
+\begin{proof}
+    La demostración se basa en una serie de reducciones hasta que lleguemos a un caso donde podamos aplicar el teorema en su versión débil \ref{Teorema debil}:
+
+    \underline{\textit{Paso 1: Reducción al caso particular $A = X$.}} Como $A$ es constructible, $A = A_1 \cup \cdots \cup A_r$ con $A_i$ localmente cerrado, así, $f(A) = f(A_1) \cup \cdots \cup f(A_r)$. Con lo cual, considerando el morfismo $A_i \hookrightarrow X \overset{f}{\to} Y$ con la estructura de subvariedad localmente cerrada $A_i$ de $X$, basta probar el caso $A = X$.
+
+    \underline{\textit{Paso 2: Reducción al caso $Y$ afín.}} Recordemos que las variedades algebraicas se construyen ``pegando'' abiertos que tienen estructura de variedad afín como espacio anillado. Con lo cual, $Y$ es la unión de abiertos afines; se puede tomar una unión finita pues $Y$ es un espacio topológico Noetheriano por definición, ergo cuasi-compacto; digamos $Y = Y_1 \cup \cdots \cup Y_m$. Ahora bien, $X = f^{-1} (Y_1) \cup \cdots \cup f^{-1} (Y_m)$ es una descomposición en abiertos. Así, basta probar que las imágenes de los morfismos $f^{-1} (Y_j) \hookrightarrow X \overset{f}{\to} Y_j$ son constructibles, pues $f(X)$ es la unión de estas finitas imágenes que son constructibles en su respectivo $Y_j$ y luego por transitividad son constructibles en $Y$ también, entonces la Proposición \ref{Proposicion} nos garantiza que $f(X)$ es constructible en $Y$.
+
+    \underline{\textit{Paso 3: Reducción al caso $X$ afín. }} Como venimos haciendo en los pasos anteriores, escribiendo $X = U_1 \cup \cdots \cup U_n$ como unión finita de abiertos afines y considerando los morfismos $U_i \hookrightarrow X \overset{f}{\to} Y$, basta probar el caso $X$ variedad afín y $f(X)$ constructible en $Y$.
+
+    \underline{\textit{Paso 4: Reducción al caso $X$ irreducible. }} Sabemos que $X = X_1 \cup \cdots \cup X_l$ es su descomposición en componentes irreducibles. De la misma forma que hicimos en el anterior paso, podemos suponer que $X = X_i$ es irreducible.
+
+    \underline{\textit{Paso 5: Reducción al caso $f$ dominante. }} Considerando $Y = \bar {f(X)}$, basta probar que $f$ es dominante. En efecto, si $f(X)$ es constructible en $\bar {f(X)}$, como este último es cerrado en $Y$, es en particular constructible, y por transitividad $f(X)$ también debe serlo en $Y$.
+
+    \bigskip
+
+    Finalmente, todas estas reducciones nos llevan a tener que probar que si $X$, $Y$ son variedades afines, $X$ irreducible, y $f : X \to Y$ un morfismo dominante, entonces $f(X)$ es constructible. Pero por la versión débil del teorema \ref{Teorema debil}, $f(X)$ contiene un abierto de $Y$, digamos $U$, y podemos escribir
+    \[
+    f(X) = U \cup f(X\setminus f^{-1} (U)).
+    \]
+    Como $X \setminus f^{-1} (U)$ es un cerrado propio de $X$, debe ser vacío o tener dimensión estrictamente menor que $X$, pues para que tengan la misma dimensión deben ser iguales (ver el Ejercicio \ref{Ejercicio}). Por inducción en la dimensión de $X$ tenemos que $f(X)$ es unión de dos constructibles, ergo es constructible. Notar que el caso base es $\dim X = 0$, con lo cual $X$ es finito y por lo tanto $f(X)$ también; los puntos son cerrados en la variedad $Y$, así que la unión de finitos puntos en $Y$ también es constructible, probando el caso base.
+\end{proof}
+
+\begin{corollary}\label{Corolario}
+    Si $f : X \to Y$ es un morfismo de variedades algebraicas, entonces $f(X)$ contiene un abierto denso de $\bar {f(X)}$.
+\end{corollary}
+\begin{proof}
+    Por el Lema \ref{Lema} y el caso particular del teorema.
+\end{proof}
+
+\begin{example}\label{Ejemplo}
+    La imagen del morfismo regular $f:\mathbb{A}^2 \to \mathbb{A}^2,\;(x,y)\mapsto (x,xy)$ es constructible, ya que se puede escribir como la unión de los conjuntos $A_1, A_2$ dados por:
+\begin{align*}
+A_1 &:= \{(0,0)\} \\
+A_2 &:= \afine 2 \setminus V (X) = D_{\afine 2} (X),
+\end{align*}
+donde $V(X)$ denota la variedad dada por los ceros del polinomio $p(X,Y) = X$ y $D_{\afine 2} (X)$ es el abierto principal de $\afine 2$ dado por los puntos $(x,y)$ donde $p$ no se anula. Aquí $A_1$ es Zariski cerrado y $A_2$ es Zariski abierto (de hecho un abierto principal), en particular son constructibles en $\mathbb{A}^2$.
+\end{example}
+
+%--------------------------------
+\newpage
+
+\bibliographystyle{alpha}
+\bibliography{main.bib}{}
+%--------------------------------
+
+
+
+
+\end{document}
+
